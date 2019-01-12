@@ -1,7 +1,30 @@
 <?php 
 	require_once('contactsController.php');
 
+	$paginate = 1;
+	
 	$contacts = allContacts();
+	$size = sizeof($contacts);
+	$opt1 = intdiv($size,3)+1;
+	$opt2 = $size / 3;
+	
+	$pages = (is_float($opt2))? $opt1 : $opt2;
+
+
+	if (isset($_GET['p'])) {
+		$paginate = (((integer)$_GET['p'] == 0) || ((integer)$_GET['p'] > $pages))? 1 : (integer)$_GET['p'];
+	}
+
+	$index = (($paginate) + ($paginate - 3));
+
+	$array = $contacts;
+	$contacts = [];
+
+	$contacts[0] = $array[$index + $paginate];
+	$contacts[1] = $array[$index + $paginate + 1];
+	$contacts[2] = $array[$index + $paginate + 2];
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -27,7 +50,27 @@
 		            		</a>
 		          		</li>
 		          		<li class="nav-item">
-		            		<a class="nav-link" href="new.php">New Contact</a>
+		            		<a class="nav-link" href="new.php" data-toggle="modal" data-target="#CreateContact">New Contact</a>
+
+		            		<div class="modal fade" id="CreateContact" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+								   	<div class="modal-content">
+								      	<div class="modal-header">
+								        	<h5 class="modal-title" id="exampleModalLabel">Edit Contact : <strong>User</strong> </h5>
+								        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								          		<span aria-hidden="true">&times;</span>
+								        	</button>
+								      	</div>
+								      	<div class="modal-body">
+								        	New
+								      	</div>
+								      	<div class="modal-footer">
+								        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								        	<button type="button" class="btn btn-primary">Save changes</button>
+								      	</div>
+								    </div>
+								</div>
+							</div>
 		          		</li>
 		        	</ul>
 		        	<form class="form-inline my-2 my-md-0">
@@ -122,28 +165,24 @@
 	        	<?php endforeach ?>
 	    	</div>
 	      	<!-- /.row -->
-	      	<br>
+	      	<br><br><br><br>
 
 	      	<footer>
 		      	<!-- Pagination -->
 		      	<ul class="pagination justify-content-center">
 		        	<li class="page-item">
-		          		<a class="page-link" href="#" aria-label="Previous">
+		          		<a class="page-link" href="index.php?p=<?= $paginate - 1 ?>" aria-label="Previous">
 		            		<span aria-hidden="true">&laquo;</span>
 		            		<span class="sr-only">Previous</span>
 		          		</a>
 		        	</li>
+		        	<?php foreach (range(1, $pages) as $value): ?>
+			        	<li class="page-item">
+			          		<a class="page-link" href="index.php?p=<?= $value ?>"><?= $value ?></a>
+			        	</li>
+		        	<?php endforeach ?>
 		        	<li class="page-item">
-		          		<a class="page-link" href="#">1</a>
-		        	</li>
-		        	<li class="page-item">
-		          		<a class="page-link" href="#">2</a>
-		        	</li>
-		        	<li class="page-item">
-		          		<a class="page-link" href="#">3</a>
-		        	</li>
-		        	<li class="page-item">
-		          		<a class="page-link" href="#" aria-label="Next">
+		          		<a class="page-link" href="index.php?p=<?= $paginate + 1 ?>" aria-label="Next">
 		            		<span aria-hidden="true">&raquo;</span>
 		            		<span class="sr-only">Next</span>
 		          		</a>
