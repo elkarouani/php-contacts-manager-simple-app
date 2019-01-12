@@ -1,6 +1,12 @@
 <?php  
 	require_once('Database.php');
 
+	if (isset($_POST)) {
+		if(isset($_POST['add'])){addEvent($_POST);}
+		if(isset($_POST['modify'])){modifyEvent($_POST);}
+		if(isset($_POST['delete'])){deleteEvent($_POST['id']);}
+	}
+
 	function allContacts() {
 		$con = getConnection();
 		$index = 0;
@@ -30,4 +36,21 @@
 		return $contacts;
 	}
 
+	function modifyEvent($post){
+		$con = getConnection();
+		update($con, 'contacts', $data);
+		header('location: index.php');
+	}
+
+	function addEvent($post) {
+		$con = getConnection();
+		add($con, 'contacts', $post);
+		header('location: index.php');
+	}
+
+	function deleteEvent($id) {
+		$con = getConnection();
+		delete($con, 'contacts', $id);
+		header('location: index.php');
+	}
 ?>

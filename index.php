@@ -21,10 +21,8 @@
 	$contacts = [];
 
 	$contacts[0] = $array[$index + $paginate];
-	$contacts[1] = $array[$index + $paginate + 1];
-	$contacts[2] = $array[$index + $paginate + 2];
-
-
+	if(isset($array[$index + $paginate + 1])){$contacts[1] = $array[$index + $paginate + 1];}
+	if(isset($array[$index + $paginate + 2])){$contacts[2] = $array[$index + $paginate + 2];}
 ?>
 <!DOCTYPE html>
 <html>
@@ -56,17 +54,38 @@
 								<div class="modal-dialog modal-dialog-centered" role="document">
 								   	<div class="modal-content">
 								      	<div class="modal-header">
-								        	<h5 class="modal-title" id="exampleModalLabel">Edit Contact : <strong>User</strong> </h5>
+								        	<h5 class="modal-title" id="exampleModalLabel">New Contact :</h5>
 								        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								          		<span aria-hidden="true">&times;</span>
 								        	</button>
 								      	</div>
-								      	<div class="modal-body">
-								        	New
-								      	</div>
-								      	<div class="modal-footer">
-								        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-								        	<button type="button" class="btn btn-primary">Save changes</button>
+								      	<div class="modal-body text-center">
+								        	<form action="contactsController.php" method="POST">
+									   			<table class="d-flex justify-content-center">
+													<tr>
+														<td><label>Nom : </label></td>
+														<td class="form-group"><input class='form-control' name="nom" type="text"></td>
+													</tr>
+													<tr>
+														<td><label>Prenom : </label></td>
+														<td class="form-group"><input class='form-control' name="prenom" type="text"></td>
+													</tr>
+													<tr>
+														<td><label>Portable : </label></td>
+														<td class="form-group"><input class='form-control' name="portable" type="text"></td>
+													</tr>	
+													<tr>
+														<td><label>Fax : </label></td>
+														<td class="form-group"><input class='form-control' name="fax" type="text"></td>
+													</tr>
+									                <tr>
+														<td><label>Ville : </label></td>
+														<td class="form-group"><input class='form-control' name="ville" type="text"></td>
+													</tr>			
+												</table>
+												<br>
+												<input class='btn btn-primary' type="submit" name="add" value="Ajouter">
+											</form>
 								      	</div>
 								    </div>
 								</div>
@@ -165,9 +184,9 @@
 	        	<?php endforeach ?>
 	    	</div>
 	      	<!-- /.row -->
-	      	<br><br><br><br>
+	      	<br><br><br>
 
-	      	<footer>
+	      	<footer class="page-footer font-small blue pt-4">
 		      	<!-- Pagination -->
 		      	<ul class="pagination justify-content-center">
 		        	<li class="page-item">
