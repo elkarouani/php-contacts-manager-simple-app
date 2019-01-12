@@ -1,9 +1,15 @@
 <?php 
 	require_once('contactsController.php');
 
+	$requested_name = "";
 	$paginate = 1;
 	
 	$contacts = allContacts();
+	
+	if(isset($_POST['nom'])){
+		$requested_name = $_POST['nom'];
+		$contacts = (contactsByName($requested_name) != [])?contactsByName($requested_name) : $contacts;
+	}
 	
 	$pages = pages(sizeof($contacts));
 
@@ -81,8 +87,8 @@
 							</div>
 		          		</li>
 		        	</ul>
-		        	<form class="form-inline my-2 my-md-0">
-		          		<input class="form-control" type="text" placeholder="Search By Name">
+		        	<form method="POST" class="form-inline my-2 my-md-0">
+		          		<input class="form-control" type="text" name="nom" placeholder="Search By Name" value="<?= $requested_name ?>">
 		        	</form>
 		      	</div>
 		    </nav>
