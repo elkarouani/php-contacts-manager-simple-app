@@ -2,7 +2,8 @@ var cards = document.querySelectorAll('.Card');
 var cardActions = [];
 
 cards.forEach( function(card, index) {
-	cardActions[index] = cards[index].children[0].children[0].children[2];
+	cardActions[index] = cards[index].children[0].children[2];
+
 });
 
 cardActions.forEach( function(element, index) {

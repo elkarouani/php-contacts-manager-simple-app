@@ -38,7 +38,7 @@
 
 	function modifyEvent($post){
 		$con = getConnection();
-		update($con, 'contacts', $data);
+		update($con, 'contacts', $post);
 		header('location: index.php');
 	}
 
